@@ -1,6 +1,6 @@
 import React from 'react';
 import "./style.css";
-import image from "./Korma.jpg";
+import image from "./korma.jpg";
 const myStyle={color:"red"}
 const Restuarant = () => {
   return (
@@ -19,6 +19,7 @@ const Restuarant = () => {
             <div className="card-read">Read</div>
             </div>
             <img src={image} alt="images" className='card-media'/>
+          <span className='card-tag subtle'>Order now</span>
         </div>
     </div>
     </>
