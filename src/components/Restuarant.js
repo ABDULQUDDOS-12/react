@@ -1,27 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./style.css";
-import image from "./korma.jpg";
-const myStyle={color:"red"}
+import Menu from './menuApi';
+import menuCard from './menuCard';
 const Restuarant = () => {
+  //usestate hooks
+  //array of two variable 1st state variable, used for data management
+  const [menuData,setmenuData] = useState(Menu)
   return (
     <>
-    <div className='card-container'>
-        <div className="card">
-            <div className="card-body">
-            <span className="card-number card-circle subtle">1</span>
-            <span className="card-author subtle" style={myStyle}>Breakfast</span>
-            <h2 className="card-title">chicken korma</h2>
-            <span className="card-description subtle">
-              I love Chicken korma and this is my favourite dish 
-              amongst alls so if i can choose many so i will choose Chicken
-              korma, karahi, kheer, shwarma
-            </span>
-            <div className="card-read">Read</div>
-            </div>
-            <img src={image} alt="images" className='card-media'/>
-          <span className='card-tag subtle'>Order now</span>
-        </div>
-    </div>
+      <menuCard/>
     </>
   )
 }
