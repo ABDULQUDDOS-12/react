@@ -1,10 +1,14 @@
 import React from 'react'
-import Restuarant from './components/Restuarant'
+// import Restuarant from './components/Restuarant'
+// import UseState from './components/hooks/useState'
+import UseEffect from './components/hooks/useEffect'
 const App = () => {
   return (
    
     <div>
-       <Restuarant/>
+      <UseEffect/>
+       {/* <UseState/> */}
+       {/* <Restuarant/> */}
     </div>
   )
 }
