@@ -1,6 +1,17 @@
-import React from 'react'
+import React,{useState} from 'react';
 import "./style.css"
 const Todo = () => {
+  const [inputdata,setInputData] = useState("");
+  const [items,setItems] = useState([]);
+  // add the items function
+  const addItem = () =>{
+    if(!inputdata){
+      alert("please fill the data")
+    }
+    else{
+      setItems([...items,inputdata])
+    }
+  }
   return (
     <>
     <div className='main-div'>
@@ -10,9 +21,28 @@ const Todo = () => {
         <figcaption>Add your list here ✌</figcaption>
         </figure>
         <div className="addItems">
-        <input type="text" name="" id="" placeholder='✍ add item' className='form-control'/>
-        <FontAwesomeIcon icon="fa-solid fa-plus add-btn" />
-        </div>
+        <input type="text" name="" id="" placeholder='✍ add item' className='form-control'value={inputdata}
+          onchange={(event)=>setInputData(event.target.value)}/>
+        <i className="fa fa-plus add-btn" onClick={addItem}></i></div>
+        <div className="showItems">
+          {items.map((currElem,index)=>{
+              return(
+            <div className="eachItem">
+            <h3>{currElem}</h3>
+            <div className="todo-btn">
+            <i className="far fa-edit add-btn"></i>
+            <i className="far fa-trash-alt add-btn"></i>
+            </div>
+            </div>
+              )
+          })}
+          
+            
+            </div>
+        <div className="showItems">
+          <button className='btn effect04' data-sm-link-text="Remove All">
+          <span>Check List</span>
+          </button></div>
         </div>
     </div>
   </>
