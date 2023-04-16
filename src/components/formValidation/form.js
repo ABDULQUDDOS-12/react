@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import "./form.css"
 const Form = () => {
+const [email,setEmail] = useState()
 const [password,setPassword] = useState('');
 const [repeatPassword,setRepeatPassword]= useState('');
 const [passwordMatch,setPasswordMatch] = useState(true);
 const [passwordError,setPasswordError]=useState('');
+const [isEmailTaken, setIsEmailTaken] = useState(false);
+const [allEmails, setAllEmails] = useState([]);
 const handlePasswordChange = (event)=>{
   const newPassword = event.target.value;
   setPassword(event.target.value)
@@ -15,6 +18,19 @@ const handleRepeatPasswordChange = (event)=>{
 }
 const handleFormSubmit =(event)=>{
   event.preventDefault();
+  const storedEmails = localStorage.getItem("emails");
+  const parsedEmails = storedEmails ? JSON.parse(storedEmails) : [];
+  setAllEmails(parsedEmails);
+
+  const isNewEmailTaken = allEmails.some((storedEmail) => storedEmail === email);
+  if (isNewEmailTaken) {
+    setIsEmailTaken(true);
+  } else {
+    localStorage.setItem("emails", JSON.stringify([...allEmails, email]));
+    setIsEmailTaken(false);
+    // Perform account creation logic here
+    // ...
+  }
   if(password===repeatPassword){
     setPasswordMatch(true);
   }
@@ -44,7 +60,10 @@ const validatePassword = (password)=>{
   }
   return ''
 }
-
+const handleEmailChange=(e)=>{
+  setEmail(e.target.value)
+  setIsEmailTaken(false) //Reset email validation
+}
 return (
     <>
      <form onSubmit={handleFormSubmit}>
@@ -54,8 +73,10 @@ return (
       <hr />
       <br />
       <label htmlFor="email" className='email'><b>Email</b></label>
-      <input type="text" placeholder='Enter Email' name='email' id='email' required/>
-      <br /> <br />
+      <input type="text" placeholder='Enter Email' name='email' id='email' required value={email} onChange={handleEmailChange}/>
+      <br />
+      {isEmailTaken && <div style={{color:"red"}}>Email is already taken</div>}
+       <br />
       <label htmlFor="password" className='password'><b>Password</b></label>
       <input type="password" name="password" id="password" placeholder='password' required value={password} onChange={handlePasswordChange}/>
       <br /> 
@@ -64,7 +85,7 @@ return (
       <label for="psw-repeat" className='password-repeat' ><b>Repeat Password</b></label>
     <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required value={repeatPassword} onChange={handleRepeatPasswordChange}></input>
     <br /> 
-    {!passwordMatch && (<p style={{color:'red'}}>Passords do not match</p>)}
+    {!passwordMatch && (<p style={{color:'red'}}>Passwords do not match</p>)}
     <br/>
     <hr />
     <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
